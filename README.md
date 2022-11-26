@@ -8,7 +8,7 @@ Tinder Dating App
 - JGProgressHUD
 - MVVM Design Pattern
 
-Using Extensions ->
+- Using Extensions
 - Setting Firebase Database
 - Setting Firebase Storage 
 - Setting Login & Register Screen
