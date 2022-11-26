@@ -1,6 +1,6 @@
 Tinder Dating App
 
-🛠Technologies ->
+🛠 Technologies ->
 
 - UIKit
 - Firebase
