@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
     let topStackView = TopNavigationStackView()
     let bottomStackView = HomeBottomStackView()
     let cardsDeckView = UIView()
+    var database = Database.database().reference()
     
 //    let cardViewModels: [CardViewModel] = {
 //        let producers = [User(name: "Kelly", age: 22, profession: "iOS developer", imageName: ["lady"]),
@@ -42,7 +43,7 @@ class HomeViewController: UIViewController {
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
-        let data = Database.database().reference().child("Users")
+        let data = self.database.child("Users")
         data.getData { error, snapshot in
             guard error == nil else {
                 print("error")
@@ -64,7 +65,7 @@ class HomeViewController: UIViewController {
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Refreshing..."
         hud.show(in: view)
-        let query = Database.database().reference().child("Users").queryOrderedByKey().queryLimited(toFirst: .random(in: 1...5))
+        let query = self.database.child("Users").queryOrderedByKey().queryLimited(toFirst: .random(in: 1...5))
         query.getData { error, snapshot in
             guard error == nil else {
                 print("error")

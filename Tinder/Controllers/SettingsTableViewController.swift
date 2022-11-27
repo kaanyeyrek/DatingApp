@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import JGProgressHUD
+import SDWebImage
+import Firebase
+import FirebaseDatabase
+import FirebaseAuth
 
 class CustomImagePickerController: UIImagePickerController {
     var imageButton: UIButton?
@@ -21,6 +26,8 @@ class SettingsTableViewController: UITableViewController {
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image3Button = createButton(selector: #selector(handleSelectPhoto))
+    var database = Database.database().reference()
+    var user: User?
 
     func createButton(selector: Selector) -> UIButton {
         let button = UIButton(type: .system)
@@ -53,7 +60,33 @@ class SettingsTableViewController: UITableViewController {
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .interactive
+        fetchCurrentUser()
     }
+    @objc fileprivate func fetchCurrentUser() {
+        let data = self.database.child("Users")
+        data.getData { error, snapshot in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            if let value = snapshot.value as? [String: Any] {
+                value.forEach({ documentSnapshot in
+                    let userDictionary = documentSnapshot.value
+                    self.user = User(dictionary: userDictionary as! [String: Any])
+                    self.loadUserPhoto()
+                    self.tableView.reloadData()
+
+                })
+            }
+        }
+    }
+    fileprivate func loadUserPhoto() {
+        guard let url = user?.imageURL1, let url = URL(string: url) else { return }
+        SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: .none) { image, _, _, _, _, _ in
+            self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal )
+        }
+    }
+    
     @objc fileprivate func handleCancel() {
         dismiss(animated: true)
     }
@@ -69,8 +102,25 @@ class SettingsTableViewController: UITableViewController {
         navigationItem.title = "Settings"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleCancel)),
-                                              UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleCancel))]
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave)),
+                                              UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogOut))
+        ]
+    }
+    @objc fileprivate func handleLogOut() {
+        
+        
+    }
+    @objc fileprivate func handleSave() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let docData = ["fullname": user?.name ?? "", "uid": uid, "imageURL1": user?.imageURL1 ?? "", "age": 60, "profession": "Bank Robber"] as [String : Any]
+        self.database.child("Users").child(uid).setValue(docData) { error, _ in
+            if error != nil {
+                print("failed")
+                return
+            }
+            print("successfully")
+        }
+    
     }
     //MARK: - TableView Methods
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -84,10 +134,15 @@ class SettingsTableViewController: UITableViewController {
         switch indexPath.section {
         case 1:
             cell.textField.placeholder = "Enter Name"
+            cell.textField.text = user?.name
         case 2:
             cell.textField.placeholder = "Enter Profession"
+            cell.textField.text = user?.profession
         case 3:
             cell.textField.placeholder = "Enter Age"
+            if let age = user?.age {
+                cell.textField.text = String(age)
+            }
         default:
             cell.textField.placeholder = "Enter Bio"
         }
