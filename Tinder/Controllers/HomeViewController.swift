@@ -27,7 +27,16 @@ class HomeViewController: UIViewController {
 //        return viewModels
 //    }()
     var cardViewModels = [CardViewModel]()
- 
+    //MARK: - LifeCycle
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Auth.auth().currentUser == nil {
+            let loginViewController = LoginViewController()
+            let nav = UINavigationController(rootViewController: loginViewController)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         topStackView.profileButton.addTarget(self, action: #selector(didTapProfileButton), for: .touchUpInside)
@@ -41,8 +50,11 @@ class HomeViewController: UIViewController {
     // Firebase fetch user
     fileprivate func fetchUsersFromFirestore() {
         let hud = JGProgressHUD(style: .dark)
-        hud.textLabel.text = "Fetching Users"
+        hud.textLabel.text = "Loading"
         hud.show(in: view)
+        cardsDeckView.subviews.forEach({
+            $0.removeFromSuperview()
+        })
         let data = self.database.child("Users")
         data.getData { error, snapshot in
             guard error == nil else {

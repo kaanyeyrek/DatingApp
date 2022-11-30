@@ -53,9 +53,17 @@ class RegistrationViewController: UIViewController {
         button.backgroundColor = .lightGray
         button.setTitleColor(.gray, for: .disabled)
         button.isEnabled = false
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)
+        return button
+    }()
+    fileprivate let goToLoginButton: UIButton = {
+       let button = UIButton()
+        button.setTitle("Go to Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         return button
     }()
     let registeringHUD = JGProgressHUD(style: .dark)
@@ -70,6 +78,7 @@ class RegistrationViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = true
         setupGradientLayer()
         setTapGesture()
         setLayout()
@@ -102,13 +111,19 @@ class RegistrationViewController: UIViewController {
     fileprivate func setLayout() {
         lazy var stackView = UIStackView(arrangedSubviews: [selectPhotoButton, fullNameTextField, emailTextfield, passwordTextfield, registerButton])
         view.addSubview(stackView)
+        view.addSubview(goToLoginButton)
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        goToLoginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
     fileprivate func setTapGesture() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapDismiss)))
+    }
+    @objc fileprivate func didTapLoginButton(with button: UIButton) {
+        let loginController = LoginViewController()
+        navigationController?.pushViewController(loginController, animated: true)
     }
     // Register
     @objc fileprivate func didTapRegisterButton() {
@@ -118,6 +133,7 @@ class RegistrationViewController: UIViewController {
                 self.showHUDWithError(error: error)
                 return
             }
+            self.dismiss(animated: true)
         }
     }
     // JGProgressHUD
