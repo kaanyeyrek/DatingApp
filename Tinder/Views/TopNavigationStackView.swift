@@ -8,6 +8,7 @@
 import UIKit
 
 class TopNavigationStackView: UIStackView {
+    
     public let profileButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "top_left_profile")?.withRenderingMode(.alwaysOriginal), for: .normal)

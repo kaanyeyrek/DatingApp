@@ -12,6 +12,7 @@ import JGProgressHUD
 
 
 class HomeViewController: UIViewController {
+    
     let topStackView = TopNavigationStackView()
     let bottomStackView = HomeBottomStackView()
     let cardsDeckView = UIView()
@@ -67,7 +68,9 @@ class HomeViewController: UIViewController {
                     let userDictionary = documentSnapshot.value
                     let user = User(dictionary: userDictionary as! [String: Any])
                     self.cardViewModels.append(user.toCardViewModel())
-                    self.setupCardFromUser(user: user)
+                    if user.uid != Auth.auth().currentUser?.uid {
+                        self.setupCardFromUser(user: user)
+                    }
                 })
             }
         }
@@ -97,12 +100,12 @@ class HomeViewController: UIViewController {
 
     fileprivate func setupCardFromUser(user: User) {
         let cardView = CardView(frame: .zero)
+        cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardsDeckView.addSubview(cardView)
         cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
     }
-
     @objc fileprivate func didTapProfileButton() {
         let settingsVC = SettingsTableViewController()
         let nav = UINavigationController(rootViewController: settingsVC)
@@ -119,13 +122,14 @@ class HomeViewController: UIViewController {
         overallStackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
         overallStackView.bringSubviewToFront(cardsDeckView)
     }
-//    fileprivate func setupDummyCards() {
-//        cardViewModels.forEach { cardVM in
-//            let cardView = CardView(frame: .zero)
-//            cardView.cardViewModel = cardVM
-//            cardsDeckView.addSubview(cardView)
-//            cardView.fillSuperview()
-//        }
-//    }
     }
+//MARK: - CardViewDelegate
+extension HomeViewController: CardViewDelegate {
+    func didTapMoreInfo(cardViewModel: CardViewModel) {
+        let vc = UserDetailsViewController()
+        vc.cardViewModel = cardViewModel
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+}
 

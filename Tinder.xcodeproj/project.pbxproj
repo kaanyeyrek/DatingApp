@@ -12,9 +12,11 @@
 		CE87409529312C2D009EC5DC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE87409429312C2D009EC5DC /* SettingsCell.swift */; };
 		CE8FF909292D5193008281E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE8FF908292D5193008281E4 /* GoogleService-Info.plist */; };
 		CE96E263292CDA1F00287CE0 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96E262292CDA1F00287CE0 /* RegistrationViewController.swift */; };
+		CE9786A52938F72200AE1E61 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9786A42938F72200AE1E61 /* UserDetailsViewController.swift */; };
 		CEB751E5292A2E8D00788E98 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB751E4292A2E8D00788E98 /* CardViewModel.swift */; };
 		CEB751E7292A5D4300788E98 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB751E6292A5D4300788E98 /* Advertiser.swift */; };
 		CEBF9B2D293534E2008E9DE0 /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF9B2C293534E2008E9DE0 /* AgeRangeCell.swift */; };
+		CECEA5FA293A5E4800DE20D5 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECEA5F9293A5E4800DE20D5 /* SwipingPhotosController.swift */; };
 		CEDE1222292E33BB00257FA2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDE1221292E33BB00257FA2 /* CustomTextField.swift */; };
 		CEDE1224292E355500257FA2 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDE1223292E355500257FA2 /* Bindable.swift */; };
 		CEDE1226292E36F500257FA2 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDE1225292E36F500257FA2 /* RegistrationViewModel.swift */; };
@@ -41,9 +43,11 @@
 		CE87409429312C2D009EC5DC /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		CE8FF908292D5193008281E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE96E262292CDA1F00287CE0 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		CE9786A42938F72200AE1E61 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		CEB751E4292A2E8D00788E98 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		CEB751E6292A5D4300788E98 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		CEBF9B2C293534E2008E9DE0 /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
+		CECEA5F9293A5E4800DE20D5 /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		CEDE1221292E33BB00257FA2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		CEDE1223292E355500257FA2 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		CEDE1225292E36F500257FA2 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -91,6 +95,24 @@
 				57BADCCD6B8D050D8342489C /* Pods-Tinder.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		CE9786A22938F6DE00AE1E61 /* User Details */ = {
+			isa = PBXGroup;
+			children = (
+				CE9786A42938F72200AE1E61 /* UserDetailsViewController.swift */,
+				CECEA5F9293A5E4800DE20D5 /* SwipingPhotosController.swift */,
+			);
+			path = "User Details";
+			sourceTree = "<group>";
+		};
+		CE9786A32938F70A00AE1E61 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				CEF78D682937858300BA96C0 /* LoginViewController.swift */,
+				CEF78D6A2937A7D000BA96C0 /* LoginViewModel.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		CEB751E3292A2E7600788E98 /* ViewModels */ = {
@@ -153,11 +175,11 @@
 		CEED29E52928C9F900C217DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE9786A32938F70A00AE1E61 /* Login */,
+				CE9786A22938F6DE00AE1E61 /* User Details */,
 				CEED29D42928C9A400C217DA /* HomeViewController.swift */,
 				CE96E262292CDA1F00287CE0 /* RegistrationViewController.swift */,
 				CEDE1225292E36F500257FA2 /* RegistrationViewModel.swift */,
-				CEF78D682937858300BA96C0 /* LoginViewController.swift */,
-				CEF78D6A2937A7D000BA96C0 /* LoginViewModel.swift */,
 				CEDE1223292E355500257FA2 /* Bindable.swift */,
 				CE45D69C293101B4004EE5CC /* SettingsTableViewController.swift */,
 				CEED29E62928CA2000C217DA /* Extensions.swift */,
@@ -300,6 +322,7 @@
 				CE96E263292CDA1F00287CE0 /* RegistrationViewController.swift in Sources */,
 				CEED29D52928C9A400C217DA /* HomeViewController.swift in Sources */,
 				CEED29D12928C9A400C217DA /* AppDelegate.swift in Sources */,
+				CE9786A52938F72200AE1E61 /* UserDetailsViewController.swift in Sources */,
 				CEED29F22929423E00C217DA /* User.swift in Sources */,
 				CEED29ED2928D5B000C217DA /* TopNavigationStackView.swift in Sources */,
 				CEDE1222292E33BB00257FA2 /* CustomTextField.swift in Sources */,
@@ -309,6 +332,7 @@
 				CE87409529312C2D009EC5DC /* SettingsCell.swift in Sources */,
 				CEF78D6B2937A7D000BA96C0 /* LoginViewModel.swift in Sources */,
 				CEB751E5292A2E8D00788E98 /* CardViewModel.swift in Sources */,
+				CECEA5FA293A5E4800DE20D5 /* SwipingPhotosController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

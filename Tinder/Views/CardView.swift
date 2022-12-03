@@ -8,6 +8,9 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate {
+    func didTapMoreInfo(cardViewModel: CardViewModel)
+}
 class CardView: UIView {
     var cardViewModel: CardViewModel! {
         didSet {
@@ -26,8 +29,15 @@ class CardView: UIView {
             barStackView.arrangedSubviews.first?.backgroundColor = .white
         }
     }
+    var delegate: CardViewDelegate?
     fileprivate let imageView = UIImageView(image: UIImage(named: "lady"))
     fileprivate let informationLabel = UILabel()
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "info_icon")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(didTapMoreInfoButton), for: .touchUpInside)
+        return button
+    }()
     fileprivate let gradientLayer = CAGradientLayer()
     // Config ShouldDismissCard
     fileprivate let threshold: CGFloat = 80
@@ -65,6 +75,9 @@ class CardView: UIView {
         informationLabel.textColor = .white
         informationLabel.font = UIFont.systemFont(ofSize: 30, weight: .heavy)
         informationLabel.numberOfLines = 0
+        
+        addSubview(moreInfoButton)
+        moreInfoButton.anchor(top: nil, leading: nil, bottom: self.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 44, height: 44))
     }
     fileprivate func setupGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
@@ -77,8 +90,6 @@ class CardView: UIView {
         barStackView.spacing = 4
         barStackView.distribution = .fillEqually
     }
-
-    
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
         // Rotation
         let translation = gesture.translation(in: nil)
@@ -139,6 +150,9 @@ class CardView: UIView {
         }
         barStackView.arrangedSubviews[imageIndex].backgroundColor = .white
     
+    }
+    @objc fileprivate func didTapMoreInfoButton(with button: UIButton) {
+        delegate?.didTapMoreInfo(cardViewModel: self.cardViewModel)
     }
     
 }
