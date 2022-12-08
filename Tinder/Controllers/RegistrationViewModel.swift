@@ -23,12 +23,12 @@ class RegistrationViewModel {
     var email: String? { didSet { checkFormValidity() }}
     var password: String? { didSet { checkFormValidity() }}
     
-    fileprivate func checkFormValidity() {
-        let isFormValid = fullName?.isEmpty == false && email?.isEmpty == false && password?.isEmpty == false
+    public func checkFormValidity() {
+        let isFormValid = fullName?.isEmpty == false && email?.isEmpty == false && password?.isEmpty == false && bindableImage.value != nil
         bindableIsFormValid.value = isFormValid
         
     }
-    func performRegistration(completion: @escaping (Error?) -> ()) {
+    public func performRegistration(completion: @escaping (Error?) -> ()) {
         guard let email = email, let password = password else { return }
         self.bindableIsRegistering.value = true
         Auth.auth().createUser(withEmail: email, password: password) { response, error in

@@ -9,7 +9,7 @@ import UIKit
 
 class HomeBottomStackView: UIStackView {
     
-    static func createButton(image: UIImage) -> UIButton {
+    static func createButton(image: UIImage) -> UIButton {
         let button = UIButton(type: .system)
         button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill

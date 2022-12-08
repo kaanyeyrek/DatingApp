@@ -183,6 +183,7 @@ extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigat
         dismiss(animated: true, completion: nil)
         let image = info[.originalImage] as? UIImage
         registrationViewModel.bindableImage.value = image
+        registrationViewModel.checkFormValidity()
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true)

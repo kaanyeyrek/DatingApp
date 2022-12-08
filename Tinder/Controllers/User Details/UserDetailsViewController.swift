@@ -59,32 +59,32 @@ class UserDetailsViewController: UIViewController {
         setupVisualBlurEffectView()
         setupBottomControls()
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let imageView = swipingController.view!
-        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width + extraSwipingHeight)
-        
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let swipingView = swipingController.view!
+        swipingView.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: view.frame.width + extraSwipingHeight)
     }
     //Layout
     fileprivate func autoLayout() {
         view.addSubview(scrollView)
         scrollView.fillSuperview()
         
-        let imageView = swipingController.view!
-        scrollView.addSubview(imageView)
+        let swipingView = swipingController.view!
+        scrollView.addSubview(swipingView)
+       
         
         scrollView.addSubview(infoLabel)
-        infoLabel.anchor(top: imageView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
+        infoLabel.anchor(top: swipingView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
         
         scrollView.addSubview(dismissButon)
-        dismissButon.anchor(top: imageView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 24), size: .init(width: 50, height: 50))
+        dismissButon.anchor(top: swipingView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 24), size: .init(width: 50, height: 50))
     }
     // Top blur effect
     fileprivate func setupVisualBlurEffectView() {
         let blurEffect = UIBlurEffect(style: .regular)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         view.addSubview(visualEffectView)
-        visualEffectView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
+        visualEffectView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 100)
     }
     //Bottom UIStackView
     fileprivate func setupBottomControls() {
@@ -108,7 +108,6 @@ class UserDetailsViewController: UIViewController {
     @objc fileprivate func didTapSuperLikeButton(with button: UIButton) {
         print("tapped")
     }
-
 }
 //MARK: - UIScrollView Delegate methods
 extension UserDetailsViewController: UIScrollViewDelegate {
